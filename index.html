@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Transmedia rocznik</title>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+
+  <!-- AR.js (markerless / hit-test) -->
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <a-scene
+    embedded
+    vr-mode-ui="enabled: false"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+  >
+
+    <a-assets>
+      <img id="art" src="image.png">
+    </a-assets>
+
+    <!-- miejsce wykrycia powierzchni -->
+    <a-entity id="hit-test" ar-hit-test></a-entity>
+
+    <!-- PNG -->
+    <a-image
+      id="object"
+      src="#art"
+      visible="false"
+      rotation="-90 0 0"
+      width="1"
+      height="1"
+    ></a-image>
+
+    <a-camera></a-camera>
+  </a-scene>
+
+  <script>
+    const scene = document.querySelector("a-scene");
+    const object = document.querySelector("#object");
+
+    scene.addEventListener("click", (event) => {
+      const hitTest = scene.querySelector("[ar-hit-test]");
+      const pose = hitTest.components["ar-hit-test"].hitTest;
+
+      if (pose) {
+        object.setAttribute("position", pose.position);
+        object.setAttribute("visible", true);
+      }
+    });
+  </script>
+</body>
+</html>
