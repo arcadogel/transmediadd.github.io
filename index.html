@@ -7,7 +7,7 @@
   <!-- A-Frame -->
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
 
-  <!-- AR.js (markerless / hit-test) -->
+  <!-- AR.js -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar-nft.js"></script>
 
   <style>
@@ -23,49 +23,20 @@
     embedded
     vr-mode-ui="enabled: false"
     arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-    renderer="logarithmicDepthBuffer: true;"
   >
 
-    <!-- miejsce wykrycia powierzchni -->
-    <a-entity id="hit-test" ar-hit-test></a-entity>
+    <!-- Kamera -->
+    <a-camera>
+      <!-- Obrazek zawsze przed kamerą -->
+      <a-image
+        src="image.png"
+        position="0 0 -1"
+        rotation="0 0 0"
+        width="0.5"
+        height="0.5"
+      ></a-image>
+    </a-camera>
 
-    <!-- PNG -->
-    <a-image
-      id="object"
-      src="image.png"
-      visible="false"
-      rotation="-90 0 0"
-      position="0 0 0"
-      width="0.5"
-      height="0.5"
-    ></a-image>
-
-    <a-camera></a-camera>
   </a-scene>
-
-  <script>
-    const scene = document.querySelector("a-scene");
-    const object = document.querySelector("#object");
-
-    scene.addEventListener("click", (event) => {
-      const hitTest = scene.querySelector("[ar-hit-test]");
-      const pose = hitTest.components["ar-hit-test"].hitTest;
-
-      if (pose) {
-        // Ustaw pozycję na wykrytą powierzchnię
-        object.setAttribute("position", {
-          x: pose.position.x,
-          y: pose.position.y,
-          z: pose.position.z
-        });
-
-        // Obracamy obrazek, żeby leżał płasko
-        object.setAttribute("rotation", "-90 0 0");
-
-        // Upewniamy się, że obrazek jest widoczny
-        object.setAttribute("visible", true);
-      }
-    });
-  </script>
 </body>
 </html>
