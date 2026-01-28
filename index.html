@@ -26,9 +26,8 @@
     renderer="logarithmicDepthBuffer: true;"
   >
 
-    <a-assets>
-      <img id="art" src="image.png">
-    </a-assets>
+    <a-image src="image.png" position="0 0 -3" width="1.5" height="1"></a-image>
+    
 
     <!-- miejsce wykrycia powierzchni -->
     <a-entity id="hit-test" ar-hit-test></a-entity>
@@ -37,7 +36,7 @@
     <a-image
       id="object"
       src="#art"
-      visible="false"
+      visible="true"
       rotation="-90 0 0"
       width="1"
       height="1"
@@ -62,3 +61,4 @@
   </script>
 </body>
 </html>
+
