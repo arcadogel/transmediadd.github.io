@@ -26,9 +26,6 @@
     renderer="logarithmicDepthBuffer: true;"
   >
 
-    
-    
-
     <!-- miejsce wykrycia powierzchni -->
     <a-entity id="hit-test" ar-hit-test></a-entity>
 
@@ -36,9 +33,9 @@
     <a-image
       id="object"
       src="image.png"
-      visible="true"
-      rotation="90 0 0"
-      position="0 100 0"
+      visible="false"
+      rotation="-90 0 0"
+      position="0 0 0"
       width="0.5"
       height="0.5"
     ></a-image>
@@ -55,15 +52,20 @@
       const pose = hitTest.components["ar-hit-test"].hitTest;
 
       if (pose) {
-        object.setAttribute("position", pose.position);
+        // Ustaw pozycję na wykrytą powierzchnię
+        object.setAttribute("position", {
+          x: pose.position.x,
+          y: pose.position.y,
+          z: pose.position.z
+        });
+
+        // Obracamy obrazek, żeby leżał płasko
+        object.setAttribute("rotation", "-90 0 0");
+
+        // Upewniamy się, że obrazek jest widoczny
         object.setAttribute("visible", true);
       }
     });
   </script>
 </body>
 </html>
-
-
-
-
-
